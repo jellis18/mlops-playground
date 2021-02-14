@@ -1,7 +1,7 @@
 import datetime
 from enum import Enum
 
-from pydantic import BaseModel, confloat
+from pydantic import BaseModel, Field, confloat
 
 
 class SentimentType(str, Enum):
@@ -10,8 +10,8 @@ class SentimentType(str, Enum):
 
 
 class Review(BaseModel):
-    text: str
-    date: datetime.datetime = datetime.datetime.now()
+    text: str = Field(..., description="Text from review")
+    date: datetime.datetime = Field(datetime.datetime.now(), description="Date of review")
 
 
 class Sentiment(BaseModel):

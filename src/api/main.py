@@ -3,7 +3,7 @@ from transformers import pipeline
 
 from .schemas import Sentiment, Review
 
-app = FastAPI(description="Sentiment Analysis with Huggingface")
+app = FastAPI(description="Sentiment Analysis with Huggingface", title="Sentiment Analysis")
 
 model = pipeline("sentiment-analysis")
 

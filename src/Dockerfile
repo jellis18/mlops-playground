@@ -17,6 +17,9 @@ RUN pip install -r /app/requirements.txt && \
 
 USER sentiment
 
+# super hack to get model in the Docker image
+RUN python3 -c "from transformers import pipeline; pipeline('sentiment-analysis')"
+
 EXPOSE 5000
 
 CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "5000"]
