@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: huggingface-sentiment
+  labels:
+    app: sentiment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sentiment
+  template:
+    metadata:
+      labels:
+        app: sentiment
+    spec:
+      containers:
+      - name: huggingface-sentiment
+        image: ghcr.io/jellis18/huggingface-sentiment:latest
+        ports:
+        - containerPort: 80
+      # need this if image is private
+      #imagePullSecrets:
+      #  - name: ghcr-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: huggingface-sentiment-service
+  labels:
+    app: huggingface-sentiment
+spec:
+  selector:
+    app: huggingface-sentiment
+  ports:
+    - name: app
+      port: 80
+  type: ClusterIP
