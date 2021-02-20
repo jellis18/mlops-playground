@@ -18,7 +18,7 @@ spec:
       - name: huggingface-sentiment
         image: ghcr.io/jellis18/huggingface-sentiment:latest
         ports:
-        - containerPort: 80
+        - containerPort: 5000
       # need this if image is private
       #imagePullSecrets:
       #  - name: ghcr-secrets
@@ -28,11 +28,13 @@ kind: Service
 metadata:
   name: huggingface-sentiment-service
   labels:
-    app: huggingface-sentiment
+    app: sentiment
 spec:
   selector:
-    app: huggingface-sentiment
+    app: sentiment
   ports:
     - name: app
       port: 80
-  type: ClusterIP
+      targetPort: 5000
+      nodePort: 30000
+  type: LoadBalancer
